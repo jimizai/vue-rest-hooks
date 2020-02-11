@@ -44,8 +44,11 @@ export const useQuery = <TParam = Record<string, any>, TData = any>(
           data.value = { ...data.value, ...result };
         }
       })
-      .then(err => {
+      .catch(err => {
         error.value = err;
+      })
+      .finally(() => {
+        loading.value = false;
       });
   }
 
