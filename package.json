@@ -1,9 +1,14 @@
 {
   "name": "vue-rest-hooks",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.0.1",
+  "main": "dist/index.js",
   "license": "MIT",
   "dependencies": {
-    "@vue/composition-api": "^0.3.4"
+    "@vue/composition-api": "^0.3.4",
+    "vue": "^2.6.11"
+  },
+  "scripts": {
+    "tsc": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist/*"
   }
 }

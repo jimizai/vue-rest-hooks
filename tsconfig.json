@@ -1,23 +1,21 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "commonjs",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
+    "declaration": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "outDir": "./dist",
     "paths": {
-      "@/*": [
-        "lib/*"
-      ]
+      "@/*": ["lib/*"]
     }
   },
-  "include": [
-    "lib/**/*.ts",
-    "test/**/*.ts"
-  ]
+  "include": ["lib/**/*.ts", "index.ts"],
+  "exclude": ["node_modules*"]
 }
