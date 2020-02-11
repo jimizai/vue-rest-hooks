@@ -12,7 +12,16 @@ export interface QueryResult<TParam, TData> {
   fetchMore: (params: QueryParams<TParam>) => void;
 }
 
-export const useQuery = <TParam = Record<string, any>, TData = any>(
+export /**
+ * use restfull api typeof get reactive
+ *
+ * @template TParam
+ * @template TData
+ * @param {(params?: TParam) => Promise<TData>} request
+ * @param {QueryParams<TParam>} [params]
+ * @returns {QueryResult<TParam, TData>}
+ */
+const useQuery = <TParam = Record<string, any>, TData = any>(
   request: (params?: TParam) => Promise<TData>,
   params?: QueryParams<TParam>
 ): QueryResult<TParam, TData> => {

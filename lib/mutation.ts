@@ -13,7 +13,16 @@ export interface MutationResult<Tdata> {
   error: Ref<any>;
 }
 
-export const useMutation = <TParams = Record<string, any>, TData = any>(
+export /**
+ * use restfull api request typeof post put delete reactive
+ *
+ * @template TParams
+ * @template TData
+ * @param {RequestType<TParams, TData>} request
+ * @param {MutationParams<TParams, TData>} [params]
+ * @returns {[typeof execute, MutationResult<TData>]}
+ */
+const useMutation = <TParams = Record<string, any>, TData = any>(
   request: RequestType<TParams, TData>,
   params?: MutationParams<TParams, TData>
 ): [typeof execute, MutationResult<TData>] => {
