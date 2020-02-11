@@ -1,23 +1,34 @@
-import { ref, onMounted } from "@vue/composition-api";
+import { ref, onMounted, Ref } from "@vue/composition-api";
 
-export const useQuery = (
-  request: (params?: any) => Promise<any>,
-  ...args: any[]
-) => {
+export interface Params<TParam> {
+  variables: TParam;
+}
+
+export interface QueryResult<TParam, TData> {
+  loading: Ref<boolean>;
+  data: Ref<TData>;
+  refetch: (params: Params<TParam>) => void;
+  error: Ref<any>;
+}
+
+export const useQuery = <TParam, TData>(
+  request: (params?: TParam) => Promise<TData>,
+  params?: Params<TParam>
+): QueryResult<TParam, TData> => {
   const loading = ref<boolean>(false);
   const error = ref<any>(undefined);
-  const data = ref<any>(undefined);
+  const data = ref<TData>(undefined);
 
-  const refetch = (...params: any[]) => {
-    if (!params.length) {
-      params = args;
+  const refetch = (executeParams: Params<TParam>) => {
+    if (!Object.keys(executeParams.variables)) {
+      executeParams = params;
     }
-    execute(...params);
+    execute(executeParams);
   };
 
-  function execute(...args: any[]) {
+  function execute(args: Params<TParam>) {
     loading.value = true;
-    return request(...args)
+    return request(args.variables)
       .then(result => {
         data.value = result;
       })
@@ -26,7 +37,7 @@ export const useQuery = (
       });
   }
 
-  onMounted(() => execute(...args));
+  onMounted(() => execute(params));
 
   return {
     loading,

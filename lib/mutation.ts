@@ -1,14 +1,14 @@
 import { ref, Ref } from "@vue/composition-api";
 
-type RequestType = (...args: any[]) => Promise<any>;
+export type RequestType<TParams, TData> = (params: TParams) => Promise<TData>;
 
-interface Params<TParam, TData> {
+export interface Params<TParam, TData> {
   variables: TParam;
   update: (result: TData) => void;
 }
 
-interface MutationResult<T> {
-  data: Ref<T> | undefined;
+export interface MutationResult<Tdata> {
+  data: Ref<Tdata> | undefined;
   loading: Ref<boolean>;
   error: Ref<any>;
 }
@@ -17,7 +17,7 @@ export const useMutation = <
   TParams extends Record<string, any>,
   TData extends any
 >(
-  request: RequestType,
+  request: RequestType<TParams, TData>,
   params?: Params<TParams, TData>
 ): [any, MutationResult<TData>] => {
   const data = ref<TData | undefined>(undefined);
