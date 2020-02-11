@@ -12,7 +12,7 @@ export interface QueryResult<TParam, TData> {
   fetchMore: (params: Params<TParam>) => void;
 }
 
-export const useQuery = <TParam extends Record<string, any>, TData extends any>(
+export const useQuery = <TParam = Record<string, any>, TData = any>(
   request: (params?: TParam) => Promise<TData>,
   params?: Params<TParam>
 ): QueryResult<TParam, TData> => {

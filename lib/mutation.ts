@@ -3,8 +3,8 @@ import { ref, Ref } from "@vue/composition-api";
 export type RequestType<TParams, TData> = (params: TParams) => Promise<TData>;
 
 export interface Params<TParam, TData> {
-  variables: TParam;
-  update: (result: TData) => void;
+  variables?: TParam;
+  update?: (result: TData) => void;
 }
 
 export interface MutationResult<Tdata> {
@@ -13,13 +13,10 @@ export interface MutationResult<Tdata> {
   error: Ref<any>;
 }
 
-export const useMutation = <
-  TParams extends Record<string, any>,
-  TData extends any
->(
+export const useMutation = <TParams = Record<string, any>, TData = any>(
   request: RequestType<TParams, TData>,
   params?: Params<TParams, TData>
-): [any, MutationResult<TData>] => {
+): [typeof execute, MutationResult<TData>] => {
   const data = ref<TData | undefined>(undefined);
   const loading = ref<boolean>(false);
   const error = ref<any>(undefined);
