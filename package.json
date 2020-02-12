@@ -1,6 +1,6 @@
 {
   "name": "vue-rest-hooks",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "jimizai",
   "main": "dist/index.js",
   "description": "typescript restfull-api reactive @vue/composition-api",
@@ -31,7 +31,7 @@
     "vuex": "^3.1.2"
   },
   "scripts": {
-    "tsc": "tsc -p tsconfig.json",
+    "tsc": "yarn clean && tsc -p tsconfig.json",
     "clean": "rm -rf dist/*"
   },
   "devDependencies": {
