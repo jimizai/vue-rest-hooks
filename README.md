@@ -19,17 +19,10 @@ setup(_, ctx){
   const mutations = ctx.vuex.mapMutations
 
   // ctx.route
-  ctx.route:Route {
-    path: string
-    name?: string
-    hash: string
-    query: Dictionary<string | (string | null)[]>
-    params: Dictionary<string>
-    fullPath: string
-    matched: RouteRecord[]
-    redirectedFrom?: string
-    meta?: any
-  }
+  ctx.route = this.$route
+
+  //ctx.router
+  ctx.router = this.$router
 }
 
 ```
