@@ -23,6 +23,9 @@ setup(_, ctx){
 
   //ctx.router
   ctx.router = this.$router
+
+  //ctx.store
+  ctx.store = Vuex.Store
 }
 
 ```
