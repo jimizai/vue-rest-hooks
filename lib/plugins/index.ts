@@ -28,7 +28,7 @@ declare module "@vue/composition-api" {
   }
 }
 
-export const plugin: PluginObject<PluginOptions> = {
+export const WrappedSetupPlugin: PluginObject<PluginOptions> = {
   install(Vue, options = {}) {
     if (curVue) {
       if (process.env.NODE_ENV !== "production") {

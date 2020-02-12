@@ -2,6 +2,38 @@
 
 typescript @vue/composition-api restfull-api-hooks fetch
 
+### Qucik Start
+
+```
+npm i vue-rest-hooks -S
+
+import { WrappedSetupPlugin } from "vue-rest-hooks";
+Vue.use(WrappedSetupPlugin)
+
+setup(_, ctx){
+  // vuex functions are used like before
+  // the one different is getters and states args are Ref
+  const state = ctx.vuex.mapState
+  const getters = ctx.vuex.mapGetters
+  const actions = ctx.vuex.mapActions
+  const mutations = ctx.vuex.mapMutations
+
+  // ctx.route
+  ctx.route:Route {
+    path: string
+    name?: string
+    hash: string
+    query: Dictionary<string | (string | null)[]>
+    params: Dictionary<string>
+    fullPath: string
+    matched: RouteRecord[]
+    redirectedFrom?: string
+    meta?: any
+  }
+}
+
+```
+
 ### useQuery
 
 ```
