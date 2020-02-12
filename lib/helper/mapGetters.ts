@@ -41,8 +41,6 @@ export const mapGettersConvert = <T = any>(store: Store<T>) =>
           }
           return computed(() => store.getters[val]);
         })();
-        // mark vuex getter for devtools
-        res[key].vuex = true;
       });
       return res;
     },
