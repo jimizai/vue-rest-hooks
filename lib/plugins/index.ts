@@ -20,6 +20,7 @@ declare module "@vue/composition-api" {
     route: Route;
     router: VueRouter;
     store: Store<any>;
+    refs: any;
     vuex: {
       mapState: NormalizeNamespaceReturn;
       mapGetters: NormalizeNamespaceReturn;
