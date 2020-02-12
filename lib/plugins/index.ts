@@ -1,5 +1,5 @@
 import { PluginObject, VueConstructor } from "vue";
-import { Route } from "vue-router";
+import VueRouter, { Route } from "vue-router";
 import { Store } from "vuex";
 import { Vue } from "vue/types/vue";
 import { convertStore } from "../helper";
@@ -9,7 +9,7 @@ import {
 } from "../utils";
 
 let curVue: VueConstructor | null = null;
-const DEFAULT_EXTRA_KEYS = ["route"];
+const DEFAULT_EXTRA_KEYS = ["route", "router"];
 
 export interface PluginOptions {
   extraKeys?: string[];
@@ -18,6 +18,7 @@ export interface PluginOptions {
 declare module "@vue/composition-api" {
   interface SetupContext {
     route: Route;
+    router: typeof VueRouter;
     store: Store<any>;
     vuex: {
       mapState: NormalizeNamespaceReturn;
