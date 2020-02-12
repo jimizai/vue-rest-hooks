@@ -18,7 +18,7 @@ export interface PluginOptions {
 declare module "@vue/composition-api" {
   interface SetupContext {
     route: Route;
-    router: typeof VueRouter;
+    router: VueRouter;
     store: Store<any>;
     vuex: {
       mapState: NormalizeNamespaceReturn;
