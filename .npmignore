@@ -29,7 +29,7 @@ typedoc.json
 /*.tgz
 /*lint*
 /docs*
-lib*
+./lib*
 
 !/asset/.config
 
