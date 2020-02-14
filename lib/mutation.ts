@@ -1,6 +1,5 @@
 import { ref, Ref } from "@vue/composition-api";
-
-export type RequestType<TParams, TData> = (params?: TParams) => Promise<TData>;
+import { RequestType } from "./type";
 
 export interface MutationParams<TParam, TData> {
   variables?: TParam;

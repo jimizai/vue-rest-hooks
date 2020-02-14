@@ -1,7 +1,8 @@
 import { ref, onMounted, Ref } from "@vue/composition-api";
+import { RequestType } from "./type";
 
 export interface QueryParams<TParam> {
-  variables: TParam;
+  variables?: TParam;
 }
 
 export interface QueryResult<TParam, TData> {
@@ -22,7 +23,7 @@ export /**
  * @returns {QueryResult<TParam, TData>}
  */
 const useQuery = <TParam = Record<string, any>, TData = any>(
-  request: (params?: TParam) => Promise<TData>,
+  request: RequestType<TParam, TData>,
   params?: QueryParams<TParam>
 ): QueryResult<TParam, TData> => {
   const loading = ref<boolean>(false);
@@ -30,14 +31,14 @@ const useQuery = <TParam = Record<string, any>, TData = any>(
   const data = ref<any>(undefined);
 
   const refetch = (executeParams?: QueryParams<TParam>) => {
-    if (executeParams && !Object.keys(executeParams?.variables)) {
+    if (!executeParams) {
       executeParams = params;
     }
     execute(executeParams);
   };
 
   const fetchMore = (fetchMoreParams?: QueryParams<TParam>) => {
-    if (fetchMoreParams && !Object.keys(fetchMoreParams?.variables)) {
+    if (!fetchMoreParams) {
       fetchMoreParams = params;
     }
     execute(fetchMoreParams, true);
