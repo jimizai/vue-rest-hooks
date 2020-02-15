@@ -11,8 +11,8 @@ import { WrappedSetupPlugin } from "vue-rest-hooks";
 Vue.use(WrappedSetupPlugin)
 
 setup(_, ctx){
-  // vuex functions are used like before
-  // the one different is getters and states args are Ref
+  // vuex functions
+  // the getters and states args are Refs
   const state = ctx.vuex.mapState
   const getters = ctx.vuex.mapGetters
   const actions = ctx.vuex.mapActions
@@ -44,12 +44,18 @@ const {
 })
 
 refecth({
-  variables:{...}
+  variables:{...},
+  update(result){
+    // do some things
+  }
 })
 
 //If you want to use the fetchMore, your request Promise resolved data must be an Array type
 fetchMore({
-  variables:{...}
+  variables:{...},
+  update(result) {
+    // do some things
+  }
 })
 ```
 
@@ -62,7 +68,7 @@ is the query params => fetchData(variables)
 const [delete:fn, {loading, error, data }] = useMutation(deleteOne:fn, {
   variables:{...},
   update(result) {
-    // doSomething
+    // do some things
   }
 })
 ```
@@ -73,7 +79,7 @@ When you use delete function like this:
 delete({
   variables:{...} ,
   update(result){
-    // doSomething
+    // do some things
   }
 })
 
