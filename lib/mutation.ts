@@ -37,7 +37,7 @@ const useMutation = <TParams = Record<string, any>, TData = any>(
     return request(execParams?.variables)
       .then((result: TData) => {
         data.value = result;
-        execParams?.update && execParams.update(result);
+        execParams?.update?.(result);
       })
       .catch(err => {
         error.value = err;
