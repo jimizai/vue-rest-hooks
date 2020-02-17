@@ -40,7 +40,7 @@ export const WrappedSetupPlugin: PluginObject<PluginOptions> = {
   install(Vue, options = {}) {
     if (curVue) {
       if (process.env.NODE_ENV !== "production") {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line
         console.warn("Vue function api helper init duplicated !");
       }
     }
@@ -57,7 +57,7 @@ export const WrappedSetupPlugin: PluginObject<PluginOptions> = {
         return;
       }
       if (typeof setup !== "function") {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line
         console.warn(
           'The "setup" option should be a function that returns a object in component definitions.',
           vm

@@ -23,23 +23,21 @@ export /**
  */
 const useMutation = <TParams = Record<string, any>, TData = any>(
   request: RequestType<TParams, TData>,
-  params?: MutationParams<TParams, TData>
+  params: MutationParams<TParams, TData> = {}
 ): [typeof execute, MutationResult<TData>] => {
   const data = ref<any>(undefined);
   const loading = ref<boolean>(false);
   const error = ref<any>(undefined);
 
-  const execute = (execParams?: MutationParams<TParams, TData>) => {
-    if (!execParams) {
-      execParams = params;
-    }
+  const execute = (execParams: MutationParams<TParams, TData> = {}) => {
     loading.value = true;
-    return request(execParams?.variables)
+    return request(execParams?.variables || params.variables)
       .then((result: TData) => {
         data.value = result;
-        execParams?.update?.(result);
+        const update = execParams?.update || params.update;
+        update?.(result);
       })
-      .catch(err => {
+      .catch((err: any) => {
         error.value = err;
       })
       .finally(() => {

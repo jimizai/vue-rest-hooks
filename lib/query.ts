@@ -11,7 +11,6 @@ export interface QueryResult<TParam, TData> {
   data: Ref<TData>;
   error: Ref<any>;
   refetch: (params: QueryParams<TParam, TData>) => void;
-  fetchMore: (params: QueryParams<TParam, TData>) => void;
 }
 
 interface Options {
@@ -37,34 +36,18 @@ const useQuery = <TParam = Record<string, any>, TData = any>(
   const data = ref<any>(undefined);
 
   const refetch = (executeParams?: QueryParams<TParam, TData>) => {
-    if (!executeParams) {
-      executeParams = params;
-    }
     execute(executeParams);
   };
 
-  const fetchMore = (fetchMoreParams?: QueryParams<TParam, TData>) => {
-    if (!fetchMoreParams) {
-      fetchMoreParams = params;
-    }
-    execute(fetchMoreParams, true);
-  };
-
-  function execute(
-    args?: QueryParams<TParam, TData>,
-    fetchmore: boolean = false
-  ) {
+  function execute(args?: QueryParams<TParam, TData>) {
     loading.value = true;
-    return request(args?.variables)
-      .then(result => {
-        args?.update?.(result);
-        if (!fetchmore) {
-          data.value = result;
-        } else {
-          data.value = { ...data.value, ...result };
-        }
+    return request(args?.variables || params?.variables)
+      .then((result: any) => {
+        const update = args?.update || params?.update;
+        update?.(result);
+        data.value = result;
       })
-      .catch(err => {
+      .catch((err: any) => {
         error.value = err;
       })
       .finally(() => {
@@ -81,7 +64,6 @@ const useQuery = <TParam = Record<string, any>, TData = any>(
     loading,
     error,
     data,
-    refetch,
-    fetchMore
+    refetch
   };
 };
