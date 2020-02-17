@@ -3,6 +3,7 @@ import VueRouter, { Route } from "vue-router";
 import { Store } from "vuex";
 import { Vue } from "vue/types/vue";
 import { convertStore } from "../helper";
+import { useValidator } from "../helper/useValidator";
 import {
   NormalizeNamespaceReturn,
   typeActionsAndMutationsReturn
@@ -15,9 +16,13 @@ export interface PluginOptions {
   extraKeys?: string[];
 }
 
+interface WrappedRoute extends Route {
+  useValidator: (params: string[], fn: () => void) => void;
+}
+
 declare module "@vue/composition-api" {
   interface SetupContext {
-    route: Route;
+    route: WrappedRoute;
     router: VueRouter;
     store: Store<any>;
     refs: any;
@@ -82,6 +87,8 @@ export const WrappedSetupPlugin: PluginObject<PluginOptions> = {
           }
         });
         ctx.vuex = convertStore(ctx.store);
+        ctx.route.useValidator = (params: string[], fn: () => void) =>
+          useValidator(params, fn, ctx.route.query);
         // @ts-ignore
         return setup(props, ctx);
       };
