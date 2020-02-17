@@ -16,13 +16,14 @@ export interface PluginOptions {
   extraKeys?: string[];
 }
 
-interface WrappedRoute extends Route {
+interface Utils {
   useValidator: (params: string[], fn: () => void) => void;
 }
 
 declare module "@vue/composition-api" {
   interface SetupContext {
-    route: WrappedRoute;
+    utils: Utils;
+    route: Route;
     router: VueRouter;
     store: Store<any>;
     refs: any;
@@ -87,7 +88,8 @@ export const WrappedSetupPlugin: PluginObject<PluginOptions> = {
           }
         });
         ctx.vuex = convertStore(ctx.store);
-        ctx.route.useValidator = (params: string[], fn: () => void) =>
+        ctx.utils = {};
+        ctx.utils.useValidator = (params: string[], fn: () => void) =>
           useValidator(params, fn, ctx.route.query);
         // @ts-ignore
         return setup(props, ctx);
