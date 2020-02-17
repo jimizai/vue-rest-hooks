@@ -14,6 +14,10 @@ export interface QueryResult<TParam, TData> {
   fetchMore: (params: QueryParams<TParam, TData>) => void;
 }
 
+interface Options {
+  lazy?: boolean;
+}
+
 export /**
  * use restfull api typeof get reactive
  *
@@ -25,7 +29,8 @@ export /**
  */
 const useQuery = <TParam = Record<string, any>, TData = any>(
   request: RequestType<TParam, TData>,
-  params?: QueryParams<TParam, TData>
+  params?: QueryParams<TParam, TData>,
+  options: Options = {}
 ): QueryResult<TParam, TData> => {
   const loading = ref<boolean>(false);
   const error = ref<any>(undefined);
@@ -67,7 +72,10 @@ const useQuery = <TParam = Record<string, any>, TData = any>(
       });
   }
 
-  onMounted(() => execute(params));
+  onMounted(() => {
+    if (options.lazy) return;
+    execute(params);
+  });
 
   return {
     loading,
