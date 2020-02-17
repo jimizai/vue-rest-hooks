@@ -41,7 +41,9 @@ const {
   fetchMore
 } = useQuery(fetchData:fn,{
   variables:{...}
-})
+},{lazy: false})
+
+when the options lazy is true, useQuery will not do the request at first time
 
 refecth({
   variables:{...},
