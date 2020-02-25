@@ -25,24 +25,28 @@ const useMutation = <TParams = Record<string, any>, TData = any>(
   request: RequestType<TParams, TData>,
   params: MutationParams<TParams, TData> = {}
 ): [typeof execute, MutationResult<TData>] => {
-  const data = ref<any>(undefined);
+  const data = ref<any>(void 0);
   const loading = ref<boolean>(false);
-  const error = ref<any>(undefined);
+  const error = ref<any>(void 0);
+  const { variables = {}, update } = params;
+  const variableState = ref<any>(variables);
+  const updateFn = ref<any>(update);
 
   const execute = (execParams: MutationParams<TParams, TData> = {}) => {
+    const { variables = {}, update } = execParams;
+    variableState.value = variables;
+    updateFn.value = update;
     loading.value = true;
-    return request(execParams?.variables || params.variables)
+    return (request(variableState.value)
       .then((result: TData) => {
         data.value = result;
-        const update = execParams?.update || params.update;
-        update?.(result);
+        updateFn.value?.(result);
       })
       .catch((err: any) => {
         error.value = err;
-      })
-      .finally(() => {
-        loading.value = false;
-      });
+      }) as any).finally(() => {
+      loading.value = false;
+    });
   };
 
   return [execute, { data, loading, error }];
