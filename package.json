@@ -1,6 +1,6 @@
 {
   "name": "vue-rest-hooks",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "jimizai",
   "main": "dist/index.js",
   "description": "typescript restfull-api reactive @vue/composition-api",
