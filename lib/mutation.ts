@@ -30,17 +30,15 @@ const useMutation = <TParams = Record<string, any>, TData = any>(
   const error = ref<any>(void 0);
   const { variables = {}, update } = params;
   const variableState = ref<any>(variables);
-  const updateFn = ref<any>(update);
 
   const execute = (execParams: MutationParams<TParams, TData> = {}) => {
-    const { variables = {}, update } = execParams;
+    const { variables = {}, update: updateFn = update } = execParams;
     variableState.value = variables;
-    updateFn.value = update;
     loading.value = true;
     return (request(variableState.value)
       .then((result: TData) => {
         data.value = result;
-        updateFn.value?.(result);
+        updateFn?.(result);
       })
       .catch((err: any) => {
         error.value = err;
